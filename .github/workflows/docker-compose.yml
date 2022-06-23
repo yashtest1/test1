@@ -34,6 +34,9 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        volumes:
+          - /data/init.sql:/docker-entrypoint-initdb.d/init.sql
+          - data:/var/lib/postgresql/data
 
     steps:
       - name: Install PostgreSQL client
@@ -43,7 +46,7 @@ jobs:
 
       # queries database with postgres client
       - name: Query database
-        run: psql -h postgres -d postgres_db -U postgres_user -c 'SELECT 1;'
+        run: psql -h postgres -d postgres_db -U postgres_user -f /docker-entrypoint-initdb.d/init.sql
         env:
           # postgress password is required; alternatively, you can run:
           # `PGPASSWORD=postgres_password psql ...`
