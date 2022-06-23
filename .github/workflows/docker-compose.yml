@@ -1,3 +1,12 @@
+# .github/workflows/postgres.yml
+on: push
+jobs:
+  # label of the container job
+  postgres-job:
+    # containers must run in Linux based operating systems
+    runs-on: ubuntu-latest
+    # Docker Hub image that `postgres-job` executes in
+    container: node:latest
 services:
   postgres:
     image: postgres:12-alpine
