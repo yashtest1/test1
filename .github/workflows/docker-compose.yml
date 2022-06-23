@@ -41,7 +41,7 @@ jobs:
 
       # queries database with postgres client
       - name: Query database
-        run: psql -h postgres -d postgres_db -U postgres_user -f /docker-entrypoint-initdb.d/init.sql
+        run: psql -h 0.0.0.0 -d postgres_db -U postgres_user -f /docker-entrypoint-initdb.d/init.sql
         env:
           # postgress password is required; alternatively, you can run:
           # `PGPASSWORD=postgres_password psql ...`
