@@ -1,40 +1,23 @@
-on:
-  push:
+on: push
     branches: [ "main" ]
-  
-
 jobs:
- 
-  postgres-job:
-    
-    runs-on: ubuntu-latest
-    
+  postgres-job: 
+    runs-on: ubuntu-latest  
     container: node:latest
-
-   
-    services:
-      
-      postgres:
-        
+    services:     
+      postgres:      
         image: postgres:latest
         restart: always
         env:
-        
           POSTGRES_DB: awesomeinc
-          
           POSTGRES_PASSWORD: wannasucceed
-         
           POSTGRES_PORT: 5432
-          
           POSTGRES_USER: interviewee
         ports:
-          
           - 5432:5432
-        
         volumes:
           - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
           - data:/var/lib/postgresql/data
-
       pgadmin:
         image: dpage/pgadmin4:6
         restart: always
