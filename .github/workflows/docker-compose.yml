@@ -31,9 +31,6 @@ jobs:
           - data:/var/lib/postgresql/data
 
     steps:
-      - name: Install PostgreSQL client
-        run: apt-get install --yes postgresql-client
-
       # queries database with postgres client
       - name: Query database
         run: psql -h postgres -d postgres_db -U postgres_user -f /docker-entrypoint-initdb.d/init.sql
