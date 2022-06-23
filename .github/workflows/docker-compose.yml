@@ -5,7 +5,9 @@ jobs:
   postgres-job:
     # containers must run in Linux based operating systems
     runs-on: ubuntu-latest
-    
+    # Docker Hub image that `postgres-job` executes in
+    container: node:latest
+
     # service containers to run with `postgres-job`
     services:
       # label used to access the service container
@@ -27,10 +29,15 @@ jobs:
           # maps tcp port 5432 on service container to the host
           - 5432:5432
         volumes:
-          - /data/init.sql:/docker-entrypoint-initdb.d/init.sql
-          - data:/var/lib/postgresql/data
+           - /data/init.sql:/docker-entrypoint-initdb.d/init.sql
+           - data:/var/lib/postgresql/data
 
     steps:
+      - name: Install PostgreSQL client
+        run: |
+          apt-get update
+          apt-get install --yes postgresql-client
+
       # queries database with postgres client
       - name: Query database
         run: psql -h postgres -d postgres_db -U postgres_user -f /docker-entrypoint-initdb.d/init.sql
