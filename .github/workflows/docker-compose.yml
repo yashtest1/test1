@@ -29,7 +29,8 @@ jobs:
           # maps tcp port 5432 on service container to the host
           - 5432:5432
         volumes:
-           - /data/init.sql:/container/nodejs/config_files/init.sql
+           - /data/init.sql:/docker-entrypoint-initdb.d/init.sql
+           - data:/var/lib/postgresql/data
         # set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -40,12 +41,13 @@ jobs:
     steps:
       - name: Install PostgreSQL client
         run: |
+          docker run -v /data/init.sql:/container/node/config_files/init.sql
           apt-get update
           apt-get install --yes postgresql-client
 
       # queries database with postgres client
       - name: Query database
-        run: psql -h postgres -d postgres_db -U postgres_user -f /container/nodejs/config_files/init.sql
+        run: psql -h postgres -d postgres_db -U postgres_user -f /container/node/config_files/init.sql
         env:
           # postgress password is required; alternatively, you can run:
           # `PGPASSWORD=postgres_password psql ...`
