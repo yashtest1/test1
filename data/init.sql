@@ -1,4 +1,4 @@
-create table dbt.country (
+create table country (
     id      int,
     name    varchar,
     region  varchar,
@@ -6,7 +6,7 @@ create table dbt.country (
     constraint pk_country primary key (id)
 );
 
-insert into dbt.country values
+insert into country values
     (1000, 'Belgium', 'Europe'),
     (1001, 'Spain', 'Europe'),
     (1002, 'Pakistan', 'Asia'),
@@ -17,7 +17,7 @@ insert into dbt.country values
     (1007, 'Canada', 'America'),
     (1008, 'Vietnam', 'Asia');
 
-create table dbt.customer (
+create table customer (
     id                  int,
     name                varchar,
     email               varchar,
@@ -28,7 +28,7 @@ create table dbt.customer (
     constraint fk_country foreign key (country_id) references country (id)
 );
 
-insert into dbt.customer values
+insert into customer values
     (1000, 'Alberto Alvaro', 'alberto@alvaro.com', 1001, 'yes'),
     (1001, 'Quoc Dat Pham', 'qd.pham@bigprojects.com', 1008, 'yes'),
     (1002, 'John Smith', 'john@pocahontas.ca', 1007, 'no'),
@@ -37,14 +37,14 @@ insert into dbt.customer values
     (1005, 'Jane Doe', 'jdoe@skynet.be', 1000, 'yes');
 
 
-create table dbt.product_category (
+create table product_category (
     id int,
     name varchar,
 
     constraint pk_product_category primary key (id)
 );
 
-insert into dbt.product_category values
+insert into product_category values
     (1000, 'Medical Device'),
     (1001, 'IT & Network Stuff'),
     (1002, 'Dangerous Items'),
@@ -52,7 +52,7 @@ insert into dbt.product_category values
     (1004, 'Art & Creativity'),
     (1005, 'Miscellaneous');
 
-create table dbt.product (
+create table product (
     id          int,
     reference   varchar,
     name        varchar,
@@ -63,7 +63,7 @@ create table dbt.product (
     constraint fk_category foreign key (category_id) references product_category (id)
 );
 
-insert into dbt.product values
+insert into product values
     (1000, 'Prd-75891', 'Awesome product', 1002, '12345'),
     (1001, 'Prd-84970', 'Amazing product', 1000, '4'),
     (1002, 'Prd-94932', 'Splendid product', 1005, '12'),
@@ -72,7 +72,7 @@ insert into dbt.product values
     (1005, 'Prd-74815', 'Phenomenal product', 1001, '789');
 
 
-create table dbt.installation (
+create table installation (
     id                  int,
     name                varchar,
     description         varchar,
@@ -85,7 +85,7 @@ create table dbt.installation (
     constraint fk_customer foreign key (customer_id) references customer (id)
 );
 
-insert into dbt.installation values
+insert into installation values
     (1000, 'Inst-98037', 'Last minute installation', 1005, 1004, '2021-10-22'),
     (1001, 'Inst-51519', 'Customer request #12345', 1003, 1005, '2021-10-05'),
     (1002, 'Inst-12762', 'Preventive Maintenance', 1000, 1000, '2021-09-01'),
