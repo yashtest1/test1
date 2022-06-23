@@ -4,7 +4,6 @@ jobs:
   postgres-job:
     # containers must run in Linux based operating systems
     runs-on: ubuntu-latest
-
     services:
       postgres:
         image: postgres:latest
@@ -12,20 +11,18 @@ jobs:
           - "5432:5432"
         volumes:
           - pg-dataset:/var/lib/postgresql/data
-        environment:
-           POSTGRES_USER: postgres
-           POSTGRES_PASSWORD: 
-
-  pgadmin:
-    image: dpage/pgadmin4
-    depends_on: 
-      - postgres
-    ports:
-      - "53603:53603"
-      - "80:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: root
-
-volumes:
-  pg-dataset:
+        env:
+         POSTGRES_USER: postgres
+         POSTGRES_PASSWORD: mypwd
+      pgadmin:
+        image: dpage/pgadmin4
+        depends_on: 
+          - postgres
+        ports:
+          - "53603:53603"
+          - "80:80"
+        env:
+          PGADMIN_DEFAULT_EMAIL: admin@example.com
+          PGADMIN_DEFAULT_PASSWORD: root
+    volumes:
+      pg-dataset:
