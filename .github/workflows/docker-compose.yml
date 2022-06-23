@@ -1,28 +1,50 @@
+# .github/workflows/postgres.yml
 on: push
 jobs:
   # label of the container job
   postgres-job:
     # containers must run in Linux based operating systems
     runs-on: ubuntu-latest
+    # Docker Hub image that `postgres-job` executes in
+    container: node:latest
+
+    # service containers to run with `postgres-job`
     services:
+      # label used to access the service container
       postgres:
+        # Docker Hub image
         image: postgres:latest
-        ports:
-          - "5432:5432"
-        volumes:
-          - pg-dataset:/var/lib/postgresql/data
+        # service environment variables
+        # `POSTGRES_HOST` is `postgres`
         env:
-         POSTGRES_USER: postgres
-         POSTGRES_PASSWORD: mypwd
-      pgadmin:
-        image: dpage/pgadmin4
-        depends_on: 
-          - postgres
+          # optional (defaults to `postgres`)
+          POSTGRES_DB: postgres_db
+          # required
+          POSTGRES_PASSWORD: postgres_password
+          # optional (defaults to `5432`)
+          POSTGRES_PORT: 5432
+          # optional (defaults to `postgres`)
+          POSTGRES_USER: postgres_user
         ports:
-          - "53603:53603"
-          - "80:80"
+          # maps tcp port 5432 on service container to the host
+          - 5432:5432
+        # set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Install PostgreSQL client
+        run: |
+          apt-get update
+          apt-get install --yes postgresql-client
+
+      # queries database with postgres client
+      - name: Query database
+        run: psql -h postgres -d postgres_db -U postgres_user -f ./data/init.sql
         env:
-          PGADMIN_DEFAULT_EMAIL: admin@example.com
-          PGADMIN_DEFAULT_PASSWORD: root
-    volumes:
-      pg-dataset:
+          # postgress password is required; alternatively, you can run:
+          # `PGPASSWORD=postgres_password psql ...`
+          PGPASSWORD: postgres_password
