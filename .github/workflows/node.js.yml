@@ -8,7 +8,6 @@ on: push
 branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-    
 jobs:
   # label of the container job
   postgres-job:
@@ -34,10 +33,7 @@ jobs:
           POSTGRES_PORT: 5432
           # optional (defaults to `interviewee`)
           POSTGRES_USER: interviewee
-		volumes:
-      - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - data:/var/lib/postgresql/data
-        ports:
+		ports:
           # maps tcp port 5432 on service container to the host
           - 5432:5432
         # set health checks to wait until postgres has started
