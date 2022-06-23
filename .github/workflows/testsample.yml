@@ -14,12 +14,18 @@ jobs:
           - data:/var/lib/postgresql/data
         ports:
           - 5432:5432
-      pgadmin:
-        image: dpage/pgadmin4
-        env:
-          PGADMIN_DEFAULT_EMAIL: interviewee@test.com
-          PGADMIN_DEFAULT_PASSWORD: wannasucceed
-        volumes:
-          - ./data/servers.json:/pgadmin4/servers.json
-        ports:
-          - 8080:80
+    steps:
+        run:
+         pgadmin:
+           image: dpage/pgadmin4
+           env:
+             PGADMIN_DEFAULT_EMAIL: interviewee@test.com
+             PGADMIN_DEFAULT_PASSWORD: wannasucceed
+           volumes:
+             - /data/servers.json:/pgadmin4/servers.json
+           ports:
+             - 8080:80
+           depends_on:
+             - postgres
+     volumes:
+      data: {}
