@@ -6,7 +6,7 @@ jobs:
     # containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     # Docker Hub image that `postgres-job` executes in
-
+    container: node:latest
 
     # service containers to run with `postgres-job`
     services:
@@ -28,6 +28,8 @@ jobs:
         ports:
           # maps tcp port 5432 on service container to the host
           - 5432:5432
+        volumes:
+           - /data/init.sql:/container/nodejs/config_files/init.sql
         # set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -35,13 +37,15 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-
     steps:
       - name: Install PostgreSQL client
-        run: apt-get install --yes postgresql-client
+        run: |
+          apt-get update
+          apt-get install --yes postgresql-client
+
       # queries database with postgres client
       - name: Query database
-        run: psql -h postgres -d postgres_db -U postgres_user -c 'SELECT 1;'
+        run: psql -h postgres -d postgres_db -U postgres_user -f /container/nodejs/config_files/init.sql
         env:
           # postgress password is required; alternatively, you can run:
           # `PGPASSWORD=postgres_password psql ...`
