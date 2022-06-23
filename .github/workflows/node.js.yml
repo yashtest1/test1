@@ -1,10 +1,5 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-# .github/workflows/node.js.yml
+# .github/workflows/postgres.yml
 on: push
-branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 jobs:
   # label of the container job
   postgres-job:
@@ -23,14 +18,14 @@ jobs:
         # `POSTGRES_HOST` is `postgres`
         env:
           # optional (defaults to `postgres`)
-          POSTGRES_DB: awesomeinc
+          POSTGRES_DB: postgres_db
           # required
-          POSTGRES_PASSWORD: wannasucceed
+          POSTGRES_PASSWORD: postgres_password
           # optional (defaults to `5432`)
           POSTGRES_PORT: 5432
-          # optional (defaults to `interviewee`)
-          POSTGRES_USER: interviewee
-		ports:
+          # optional (defaults to `postgres`)
+          POSTGRES_USER: postgres_user
+        ports:
           # maps tcp port 5432 on service container to the host
           - 5432:5432
         # set health checks to wait until postgres has started
