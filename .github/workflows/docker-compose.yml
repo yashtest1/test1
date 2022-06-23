@@ -32,9 +32,7 @@ jobs:
 
     steps:
       - name: Install PostgreSQL client
-        run: |
-          apt-get update
-          apt-get install --yes postgresql-client
+        run: apt-get install --yes postgresql-client
 
       # queries database with postgres client
       - name: Query database
