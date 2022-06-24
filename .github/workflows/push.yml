@@ -8,6 +8,4 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
       - name: get ip
-        run: |
-           docker inspect
-           docker container port
+        run: docker container port
