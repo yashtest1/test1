@@ -8,4 +8,4 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
       - name: get ip
-        run: docker container port services [5432]
+        run: docker container port CONTAINER [5432]
