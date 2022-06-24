@@ -8,4 +8,4 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
       - name: get ip
-        run: docker container port
+        run: docker container port postgres [5432]
