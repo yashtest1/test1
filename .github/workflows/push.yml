@@ -8,5 +8,5 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
       - name: getport
-        run: docker container port postgres [5432]
+        run: docker run -d --name pgadmin --bind 127.0.0.1
       
