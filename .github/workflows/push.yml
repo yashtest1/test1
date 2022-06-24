@@ -8,9 +8,9 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
       - name: postgresdbrun
-        run: docker run --name admin -e POSTGRES_PASSWORD=wannasucceed -p 5432:5432 -d postgres:latest
+        run: docker run -d postgres:latest
       - name: pgadminrun
-        run: docker run -p 8080:80  -e "PGADMIN_DEFAULT_EMAIL=interviewee@test.com" -e "PGADMIN_DEFAULT_PASSWORD=wannasucceed"  -d dpage/pgadmin4
+        run: docker run -d dpage/pgadmin4:latest
       - name: process
         run: docker-compose ps
       
