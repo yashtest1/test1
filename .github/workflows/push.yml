@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the stack
-        run: docker-compose up -d --name pgadmin --bind 127.0.0.1
+        run: docker-compose up -d
       
         
       
