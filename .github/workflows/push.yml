@@ -7,5 +7,4 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the stack
         run: docker-compose up -d
-      - name: get ip
-        run: docker container port CONTAINER [5432]
+      
