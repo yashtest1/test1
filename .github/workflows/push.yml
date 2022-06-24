@@ -6,11 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the stack
-        run: docker-compose up -d
-      - name: postgresdbrun
-        run: docker run -d postgres:latest
-      - name: pgadminrun
-        run: docker run -d dpage/pgadmin4:latest
+        run: docker-compose up -d --quiet-pull
       - name: process
         run: docker-compose ps
       
