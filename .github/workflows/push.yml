@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the stack
-        run: docker-compose up -f "docker-compose.yml" up -d --build
+        run: docker-compose -f "docker-compose.yml" up -d --build
       - name: process
         run: docker-compose ps
       
